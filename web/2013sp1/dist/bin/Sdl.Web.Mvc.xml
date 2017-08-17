@@ -1,0 +1,997 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sdl.Web.Mvc</name>
+    </assembly>
+    <members>
+        <member name="T:Sdl.Web.Mvc.Configuration.BaseAreaRegistration">
+            <summary>
+            Abstract base class for DXA-style area registration.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterViewModel(System.Type)">
+            <summary>
+            Registers a View Model without associated View.
+            </summary>
+            <param name="modelType">The View Model type.</param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterViewModel(System.String,System.Type,System.String)">
+            <summary>
+            Registers a View Model and associated View.
+            </summary>
+            <param name="viewName">The name of the View to register.</param>
+            <param name="modelType">The View Model Type to associate with the View. Must be a subclass of Type <see cref="T:Sdl.Web.Common.Models.ViewModel"/>.</param>
+            <param name="controllerName">The Controller name. If not specified (or <c>null</c>), the Controller name is inferred from the <see cref="!:modelType"/>: either "Entity", "Region" or "Page".</param>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterAllViewModels">
+            <summary>
+            Automatically register all view models for an area. This is done by searching the file system
+            for all .cshtml files, determining the controller and view names from the path, and using the
+            BuildManager to determine the model type by compiling the view. Note that if your area contains
+            a lot of views, this can be a lengthy process and you might be better off explicitly registering
+            your views with the RegisterViewModel method
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterMarkupDecorator(System.Type)">
+            <summary>
+            Registers a <see cref="T:Sdl.Web.Mvc.Html.IMarkupDecorator"/> implementation.
+            </summary>
+            <param name="markupDecoratorType">The type of the markup decorator. The type must have a parameterless constructor and implement <see cref="T:Sdl.Web.Mvc.Html.IMarkupDecorator"/>.</param>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Configuration.WebRequestContext">
+            <summary>
+            Container for request level context data, wraps the HttpContext.Items dictionary, which is used for this purpose
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.Localization">
+            <summary>
+            The current request localization
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.HasNoLocalization">
+            <summary>
+            True if the current request is for a resource outside the scope of a particular localization
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.ContextEngine">
+            <summary>
+            The Tridion Context Engine
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.MaxMediaWidth">
+            <summary>
+            The maximum width for media objects for this requests display width
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.ScreenWidth">
+            <summary>
+            The size of display of the device which initiated this request
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.RequestUrl">
+            <summary>
+            The current request URL
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.AcceptTypes">
+            <summary>
+            String array of client-supported MIME accept types
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.PageId">
+            <summary>
+            Identifier for the current page
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.PageModel">
+            <summary>
+            Current Page Model
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.IsDeveloperMode">
+            <summary>
+            True if the request is for localhost domain
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.IsPreview">
+            <summary>
+            True if the request is from XPM (NOTE currently always true for staging as we cannot reliably distinguish XPM requests)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Configuration.WebRequestContext.IsInclude">
+            <summary>
+            True if the request is an include page
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Configuration.ResourceProvider">
+            <summary>
+            ASP.NET Resource Provider which obtains the resources from the current <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Context.BrowserClaims">
+            <summary>
+            Represents the claims about the user's browser.
+            </summary>
+            <remarks>
+            Based on https://github.com/NunoLinhares/TridionContextEngineWrapper/tree/master/Sdl.Tridion.Context
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.BrowserClaims.GetAspectName">
+            <summary>
+            Gets the name of the "aspect" which the strongly typed claims class represents.
+            </summary>
+            <returns>The name of the aspect.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Context.ContextClaims">
+            <summary>
+            Abstract base class for strongly typed context claims classes (such as <see cref="T:Sdl.Web.Mvc.Context.DeviceClaims"/>, <see cref="T:Sdl.Web.Mvc.Context.BrowserClaims"/> and <see cref="T:Sdl.Web.Mvc.Context.OperatingSystemClaims"/>).
+            </summary>
+            <remarks>
+            Based on https://github.com/NunoLinhares/TridionContextEngineWrapper/tree/master/Sdl.Tridion.Context
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextClaims.SetClaims(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Sets the underlying claims as obtained from the <see cref="T:Sdl.Web.Common.Interfaces.IContextClaimsProvider"/>
+            </summary>
+            <param name="claims">The claims as obtained from the <see cref="T:Sdl.Web.Common.Interfaces.IContextClaimsProvider"/></param>
+            <remarks>This method is invoked by the <see cref="T:Sdl.Web.Mvc.Context.ContextEngine"/> immediately after constructing the strongly types context claims class (using a parameterless constructor).</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextClaims.GetAspectName">
+            <summary>
+            Gets the name of the "aspect" which the strongly typed claims class represents.
+            </summary>
+            <returns>The name of the aspect.</returns>
+            <remarks>This method must be overridden in a concrete subclass. Concrete subclasses represent one aspect.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextClaims.GetClaimName(System.String)">
+            <summary>
+            Gets the (qualified) claim name in format aspectName.propertyName.
+            </summary>
+            <param name="properyName">The name of the property.</param>
+            <returns>The (qualified) claim name in format aspectName.propertyName.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextClaims.GetClaimValue``1(System.String)">
+            <summary>
+            Get a typed value of a claim with a given property name.
+            </summary>
+            <typeparam name="T">The type of the claim value.</typeparam>
+            <param name="propertyName">The property name.</param>
+            <returns>The value of the claim.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextClaims.GetClaimValues``1(System.String)">
+            <summary>
+            Get typed values of a claim with a given property name.
+            </summary>
+            <typeparam name="T">The type of the individual claim values; an enumerable of this type will be returned.</typeparam>
+            <param name="propertyName">The property name.</param>
+            <returns>The values of the claim.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Context.ContextEngine">
+            <summary>
+            Provides access to the context claims as provided by the Context Engine.
+            </summary>
+            <remarks>
+            Based on https://github.com/NunoLinhares/TridionContextEngineWrapper/tree/master/Sdl.Tridion.Context
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextEngine.#ctor">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Mvc.Context.ContextEngine"/> instance.
+            </summary>
+            <remarks><see cref="T:Sdl.Web.Mvc.Context.ContextEngine"/> should not be constructed directly, but through <see cref="P:Sdl.Web.Mvc.Configuration.WebRequestContext.ContextEngine"/>.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.ContextEngine.GetClaims``1">
+            <summary>
+            Gets strongly typed claims of a given type (for a specific aspect).
+            </summary>
+            <typeparam name="T">
+            The strongly typed claims class. Must be a subclass of <see cref="T:Sdl.Web.Mvc.Context.ContextClaims"/>. 
+            For example: <see cref="T:Sdl.Web.Mvc.Context.DeviceClaims"/>, <see cref="T:Sdl.Web.Mvc.Context.BrowserClaims"/> or <see cref="T:Sdl.Web.Mvc.Context.OperatingSystemClaims"/>.
+            </typeparam>
+            <returns>An instance of the strongly typed claims class which can be used to access context claims for a specific aspect.</returns>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Context.ContextEngine.DeviceFamilies">
+            <summary>
+            Gets all the possible device families specified in the device-families.xml.
+            </summary>
+            <returns>A list of all possible device family names.</returns>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Context.ContextEngine.DeviceFamily">
+            <summary>
+            Gets the device family (an aggregated device claim determined from other context claims).
+            </summary>
+            <returns>A string representing the device family.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Context.DeviceClaims">
+            <summary>
+            Represents claims about the user's device.
+            </summary>
+            <remarks>
+            Based on https://github.com/NunoLinhares/TridionContextEngineWrapper/tree/master/Sdl.Tridion.Context
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.DeviceClaims.GetAspectName">
+            <summary>
+            Gets the name of the "aspect" which the strongly typed claims class represents.
+            </summary>
+            <returns>The name of the aspect.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Context.OperatingSystemClaims">
+            <summary>
+            Represents the claims about the Operating System of the user's device.
+            </summary>
+            <remarks>
+            Based on https://github.com/NunoLinhares/TridionContextEngineWrapper/tree/master/Sdl.Tridion.Context
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Context.OperatingSystemClaims.GetAspectName">
+            <summary>
+            Gets the name of the "aspect" which the strongly typed claims class represents.
+            </summary>
+            <returns>The name of the aspect.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.EntityController.Entity(Sdl.Web.Common.Models.EntityModel,System.Int32)">
+            <summary>
+            Renders an Entity Model
+            </summary>
+            <param name="entity">The entity model</param>
+            <param name="containerSize">The size (in grid units) of the container the entity is in</param>
+            <returns>Rendered entity model</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.EntityController.MapRequestFormData(Sdl.Web.Common.Models.EntityModel)">
+            <summary>
+            Maps Form data (for an HTTP POST request) to properies of a given Entity Model and performs basic validation.
+            </summary>
+            <param name="model">The Entity Model to map the form data to.</param>
+            <returns><c>true</c> if there is any form data to be mapped.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.EntityController.ResolveValidationMessage(System.String,Sdl.Web.Common.Models.ViewModel)">
+            <summary>
+            Resolves CM-managed validation messages. 
+            </summary>
+            <param name="inputMessage">The input validation message which may have the special syntax <c>@Model.{$ModelPropertyName}</c>.</param>
+            <param name="model">The View Model used to resolve the value of such Model property expression.</param>
+            <returns>The resolved validation message or the input message in case resolving fails.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.ListController.List(Sdl.Web.Common.Models.EntityModel,System.Int32)">
+            <summary>
+            Populate/Map and render a list entity model
+            </summary>
+            <param name="entity">The list entity model</param>
+            <param name="containerSize">The size (in grid units) of the container the entity is in</param>
+            <returns>Rendered list entity model</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.NavigationController.Navigation(Sdl.Web.Common.Models.EntityModel,System.String,System.Int32)">
+            <summary>
+            Populate and render a navigation entity model
+            </summary>
+            <param name="entity">The navigation entity</param>
+            <param name="navType">The type of navigation to render</param>
+            <param name="containerSize">The size (in grid units) of the container the navigation element is in</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.NavigationController.SiteMap(Sdl.Web.Common.Models.SitemapItem)">
+            <summary>
+            Retrieves a rendered HTML site map
+            </summary>
+            <param name="entity">The sitemap entity</param>
+            <returns>Rendered site map HTML.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.NavigationController.SiteMapXml">
+            <summary>
+            Retrieves a Google XML site map
+            </summary>
+            <returns>Google site map XML.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.NavigationController.SiteMapJson">
+            <summary>
+            Retrieves a JSON site map
+            </summary>
+            <returns>Site map JSON.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.PageController.Page(System.String)">
+            <summary>
+            Given a page URL, load the corresponding Page Model, Map it to the View Model and render it. 
+            Can return XML or JSON if specifically requested on the URL query string (e.g. ?format=xml). 
+            </summary>
+            <param name="pageUrl">The page URL path (unescaped).</param>
+            <returns>Rendered Page View Model</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.PageController.Resolve(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Resolve a item ID into a url and redirect to that URL
+            </summary>
+            <param name="itemId">The ID of the Page to resolve.</param>
+            <param name="localizationId">The context Localization in which to resolve.</param>
+            <param name="defaultItemId">Optional ID of a Component to resolve in case the Page cannot be resolved.</param>
+            <param name="defaultPath"></param>
+            <returns>null - response is redirected if the URL can be resolved</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.PageController.NotFound">
+            <summary>
+            Render a file not found page
+            </summary>
+            <returns>404 page or HttpException if there is none</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.PageController.EnrichEmbeddedModels(Sdl.Web.Common.Models.PageModel)">
+            <summary>
+            Enriches all the Region/Entity Models embedded in the given Page Model.
+            </summary>
+            <param name="model">The Page Model to enrich.</param>
+            <remarks>Used by <see cref="T:Sdl.Web.Mvc.Formats.FormatDataAttribute"/> to get all embedded Models enriched without rendering any Views.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.RegionController.Region(Sdl.Web.Common.Models.RegionModel,System.Int32)">
+            <summary>
+            Map and render a region model
+            </summary>
+            <param name="region">The region model</param>
+            <param name="containerSize">The size (in grid units) of the container the region is in</param>
+            <returns>Rendered region model</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Controllers.HandleSectionErrorAttribute">
+            <summary>
+            Handle error attribute for sub-sections of pages (entities/regions) which renders view for the error, but does not prevent the rest of the page being rendered
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Controllers.BaseController">
+            <summary>
+            Abstract base class for DXA Controllers 
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Controllers.BaseController.ContentProvider">
+            <summary>
+            Gets or sets the Content Provider.
+            </summary>
+            <remarks>
+            Setting this property is no longer needed, but setter is kept for backwards compatibility.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.EnrichModel(Sdl.Web.Common.Models.ViewModel)">
+            <summary>
+            Enriches the View Model as obtained from the Content Provider.
+            </summary>
+            <param name="model">The View Model to enrich.</param>
+            <returns>The enriched View Model.</returns>
+            <remarks>
+            This is the method to override if you need to add custom model population logic. 
+            For example retrieving additional information from another system.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.ProcessModel(System.Object,System.Type)">
+            <summary>
+            Turns a domain model into a strongly typed View Model.
+            </summary>
+            <param name="sourceModel">The model to process</param>
+            <param name="type">The type of view model required</param>
+            <returns>A processed view model</returns>
+            <remarks>
+            This method is intentionally loosely typed for backwards compatibility; this was part of the V1.0 (semi-)public API
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.GetRequestParameter``1(System.String)">
+            <summary>
+            Gets the typed value of a request parameter (from the URL query string) with a given name.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="name">The name of the parameter.</param>
+            <returns>The typed value of the request parameter or the default value for the given type if the parameter is not specified or cannot be converted to the type.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.TryGetRequestParameter``1(System.String,``0@)">
+            <summary>
+            Tries to get the typed value of a request parameter (from the URL query string) with a given name.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="name">The name of the parameter.</param>
+            <param name="value">The typed value of the parameter (output).</param>
+            <returns><c>true</c> if the parameter is specified and its value can be converted to the given type; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.EnrichEntityModel(Sdl.Web.Common.Models.EntityModel)">
+            <summary>
+            Enriches a given Entity Model using an appropriate (custom) Controller.
+            </summary>
+            <param name="entity">The Entity Model to enrich.</param>
+            <returns>The enriched Entity Model.</returns>
+            <remarks>
+            This method is different from <see cref="M:Sdl.Web.Mvc.Controllers.BaseController.EnrichModel(Sdl.Web.Common.Models.ViewModel)"/> in that it doesn't expect the current Controller to be able to enrich the Entity Model;
+            it creates a Controller associated with the Entity Model for that purpose.
+            It is used by <see cref="M:Sdl.Web.Mvc.Controllers.PageController.EnrichEmbeddedModels(Sdl.Web.Common.Models.PageModel)"/>.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Controllers.BaseController.Json(System.Object,System.String,System.Text.Encoding,System.Web.Mvc.JsonRequestBehavior)">
+            <summary>
+            Creates a JSON Result which uses the JSON.NET serializer.
+            </summary>
+            <remarks>
+            By default, ASP.NET MVC uses the JavaScriptSerializer to serialize objects to JSON.
+            By overriding this method, we ensure that the (more powerful and faster) JSON.NET serializer is used when <see cref="T:Sdl.Web.Mvc.Controllers.BaseController"/>-derived
+            controller uses the standard ASP.NET MVC Json method to return a JSON result.
+            </remarks>.
+        </member>
+        <member name="T:Sdl.Web.Mvc.Formats.FormatDataAttribute">
+            <summary>
+            Action Filter attritbute used to divert rendering from the standard View to a 
+            data formatter (for example JSON/RSS), and if necessary enriching the model
+            by processing all entities to add external data
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Formats.FeedFormatter">
+            <summary>
+            Abstract base class for syndication feed formatters.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Formats.FeedFormatter.ExtractSyndicationFeed(Sdl.Web.Common.Models.PageModel)">
+            <summary>
+            Extracts a syndication feed from a given View Model.
+            </summary>
+            <param name="pageModel">The Page Model to extract the feed from.</param>
+            <returns>The extracted syndication feed.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Formats.JsonNetResult">
+            <summary>
+            JSON ActionResult using JSON.NET serializer instead of the JavaScriptSerializer which is used by default in ASP.NET MVC. 
+            </summary>
+            <remarks>
+            Based on code in this post: http://james.newtonking.com/archive/2008/10/16/asp-net-mvc-and-json-net
+            </remarks>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Formats.BaseFormatter">
+            <summary>
+            Base class for formatting model in data format
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.NoCacheAttribute">
+            <summary>
+            Attribute to be used on controller actions to ensure that they are not cached
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.DxaViewDataItems">
+            <summary>
+            Constants representing the names of ViewData/ViewBag items used by the DXA framework.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.BaseMediaHelper">
+            <summary>
+            Media helpers are used to write out image/video URLs and to set responsive design features (screensize breakpoints etc.)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.GridSize">
+            <summary>
+            The grid size used (also set in LESS: @grid-columns: 12)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.LargeScreenBreakpoint">
+            <summary>
+            Large screensize breakpoint (also set in LESS: @screen-lg: 1140px)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.MediumScreenBreakpoint">
+            <summary>
+            Medium screensize breakpoint (also set in LESS: @screen-md: 940px)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.SmallScreenBreakpoint">
+            <summary>
+            Small screensize breakpoint (also set in LESS: @screen-sm: 480px)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.ShowVideoPlaceholders">
+            <summary>
+            Show placeholder images on videos before they are viewed
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.DefaultMediaAspect">
+            <summary>
+            Default aspect ratio when rendering images/video (if none specified in the view code. Default is the golden ratio: 1.62)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.DefaultMediaFill">
+            <summary>
+            Default Media fill when rendering images/video (if none specified in the view code. Default is 100%)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.ImageResizeUrlFormat">
+            <summary>
+            Format string used for resized image URLs
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.BaseMediaHelper.ImageWidths">
+            <summary>
+            A set of fixed widths for resized/responsive images - to optimize caching (default is 160, 320, 640, 1024, 2048)
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.BaseMediaHelper.GetResponsiveWidth(System.String,System.Int32)">
+            <summary>
+            Calulated the responsive media width based on client display size and pixel ration, grid container size and width factor. 
+            </summary>
+            <param name="widthFactor">The width factor</param>
+            <param name="containerSize">The grid container size containing the media (in grid units)</param>
+            <returns>The optimal media width</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.BaseMediaHelper.GetResponsiveHeight(System.String,System.Double,System.Int32)">
+            <summary>
+            Calulated the responsive media height based on client display size and pixel ration, grid container size, width factor and aspect ratio. 
+            </summary>
+            <param name="widthFactor">The width factor</param>
+            <param name="aspect">The aspect ratio</param>
+            <param name="containerSize">The grid container size containing the media (in grid units)</param>
+            <returns>The optimal media height</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.BaseMediaHelper.GetResponsiveImageUrl(System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Get a responsive image URL
+            </summary>
+            <param name="url">Normal URL of the image</param>
+            <param name="aspect">Aspect ratio to display</param>
+            <param name="widthFactor">Width factor for the image (eg 100% or 250)</param>
+            <param name="containerSize">Size (in grid units) of container element</param>
+            <returns>A responsive image URL based on the passed parameters and client browser width and pixel ratio</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.ContextualMediaHelper">
+            <summary>
+            Media helper to be used when using Contextual Image Delivery
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Mvc.Html.ContextualMediaHelper.GetCidPath">
+            <summary>
+            Returns the CID path that the proxy operates on (e.g. cid)
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.IMarkupDecorator">
+            <summary>
+            Interface for Markup Decorator extension point.
+            </summary>
+            <remarks>
+            Markup Decorators can be used to post-process the HTML rendered by Entity or Region Views.
+            They are invoked by the <see cref="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntity(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.EntityModel,System.Int32)"/> and <see cref="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegion(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.RegionModel,System.Int32)"/> helper methods.
+            They are registered in Area Registration code uusing the <see cref="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterMarkupDecorator(System.Type)"/> method.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.IMarkupDecorator.DecorateMarkup(System.String,Sdl.Web.Common.Models.ViewModel)">
+            <summary>
+            Decorates the HTML markup rendered by a Entity or Region View.
+            </summary>
+            <param name="htmlToDecorate">The HTML to decorate.</param>
+            <param name="viewModel">The <see cref="T:Sdl.Web.Common.Models.ViewModel"/> associated with the HTML fragment.</param>
+            <returns>The decorated HTML.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.Markup">
+            <summary>
+            Utility class for methods which generate semantic markup (HTML/RDFa attributes) for use by machine processing (search engines, XPM etc.)
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.Region(Sdl.Web.Common.Models.IRegion)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Region.
+            </summary>
+            <param name="region">The Region.</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.Entity(Sdl.Web.Common.Models.IEntity)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Entity.
+            </summary>
+            <param name="entity">The Entity.</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.Property(Sdl.Web.Common.Models.IEntity,System.String,System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property of a given Entity.
+            </summary>
+            <param name="entity">The Entity which contains the property.</param>
+            <param name="propertyName">The name of the property.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RegisterMarkupDecorator(System.Type)">
+            <summary>
+            Registers a <see cref="T:Sdl.Web.Mvc.Html.IMarkupDecorator"/> implementation.
+            </summary>
+            <param name="markupDecoratorType">The type of the markup decorator. The type must have a parameterless constructor and implement <see cref="T:Sdl.Web.Mvc.Html.IMarkupDecorator"/>.</param>
+            <seealso cref="M:Sdl.Web.Mvc.Configuration.BaseAreaRegistration.RegisterMarkupDecorator(System.Type)"/>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.DecorateMarkup(System.Web.Mvc.MvcHtmlString,Sdl.Web.Common.Models.ViewModel)">
+            <summary>
+            Decorates HTML markup if any markup decorators have been registered.
+            </summary>
+            <param name="htmlToDecorate">The HTML to decorate.</param>
+            <param name="viewModel">The <see cref="T:Sdl.Web.Common.Models.ViewModel"/> associated with the HTML fragment.</param>
+            <returns>The decorated HTML.</returns>
+            <seealso cref="M:Sdl.Web.Mvc.Html.Markup.RegisterMarkupDecorator(System.Type)"/>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RenderEntityAttributes(Sdl.Web.Common.Models.EntityModel)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Entity Model.
+            </summary>
+            <param name="entityModel">The Entity Model.</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RenderPropertyAttributes(Sdl.Web.Common.Models.EntityModel,System.String,System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property of a given Entity Model.
+            </summary>
+            <param name="entityModel">The Entity Model which contains the property.</param>
+            <param name="propertyName">The name of the property.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RenderPropertyAttributes(Sdl.Web.Common.Models.EntityModel,System.Reflection.MemberInfo,System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property of a given Entity Model.
+            </summary>
+            <param name="entityModel">The Entity Model which contains the property.</param>
+            <param name="propertyInfo">The reflected property info.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RenderRegionAttributes(Sdl.Web.Common.Models.RegionModel)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Region Model.
+            </summary>
+            <param name="regionModel">The Region Model.</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.RenderXpmMarkupAttribute(Sdl.Web.Common.Models.ViewModel,System.String,System.Int32)">
+            <summary>
+            Renders a temporary HTML attribute containing the XPM markup for a given View Model or property.
+            </summary>
+            <seealso cref="M:Sdl.Web.Mvc.Html.Markup.TransformXpmMarkupAttributes(System.String)"/>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.Markup.TransformXpmMarkupAttributes(System.String)">
+            <summary>
+            Transforms XPM markup contained in HTML attributes to HTML comments inside the HTML elements.
+            </summary>
+            <param name="htmlFragment">The HTML fragment to tranform.</param>
+            <returns>The transformed HTML fragment.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.HtmlHelperExtensions">
+            <summary>
+            <see cref="T:System.Web.Mvc.HtmlHelper"/> extension methods for use in (Razor) Views.
+            </summary>
+            <remarks>
+            These extension methods are available on the built-in <c>@Html</c> object.
+            For example: <code>@Html.DxaRegions(exclude: "Logo")</code>
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Date(System.Web.Mvc.HtmlHelper,System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Format a date using the appropriate localization culture
+            </summary>
+            <param name="htmlHelper">HtmlHelper</param>
+            <param name="date">Date to format</param>
+            <param name="format">Format string (default is "D")</param>
+            <returns>Formatted date</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DateDiff(System.Web.Mvc.HtmlHelper,System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Show a text representation of the difference between a given date and now
+            </summary>
+            <param name="htmlHelper">HtmlHelper</param>
+            <param name="date">The date to compare with the current date</param>
+            <param name="format">Format string (default is "D")</param>
+            <returns>Localized versions of "Today", "Yesterday", "X days ago" (for less than a week ago) or the formatted date</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Config(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Read a configuration value
+            </summary>
+            <param name="htmlHelper">HtmlHelper</param>
+            <param name="configName">The config key (eg core.cmsUrl)</param>
+            <returns>The config value</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Resource(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Read a resource value
+            </summary>
+            <param name="htmlHelper">HtmlHelper</param>
+            <param name="resourceName">The resource key (eg core.readMoreText)</param>
+            <returns>The resource value, or key name if none found</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.FormatResource(System.Web.Mvc.HtmlHelper,System.String,System.Object[])">
+            <summary>
+            Read a resource string and format it with parameters
+            </summary>
+            <param name="htmlHelper">HtmlHelper</param>
+            <param name="resourceName">The resource key (eg core.readMoreText)</param>
+            <param name="parameters">Format parameters</param>
+            <returns>The formatted resource value, or key name if none found</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.FormatResource(System.Web.HttpContextBase,System.String,System.Object[])">
+            <summary>
+            Read a resource string and format it with parameters
+            </summary>
+            <param name="httpContext">The HttpContext</param>
+            <param name="resourceName">The resource key (eg core.readMoreText)</param>
+            <param name="parameters">Format parameters</param>
+            <returns>The formatted resource value, or key name if none found</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Resource(System.Web.HttpContextBase,System.String)">
+            <summary>
+            Read a resource value
+            </summary>
+            <param name="httpContext">The HttpContext</param>
+            <param name="resourceName">The resource key (eg core.readMoreText)</param>
+            <returns>The resource value, or key name if none found</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.FriendlyFileSize(System.Web.Mvc.HtmlHelper,System.Int64)">
+            <summary>
+            Convert a number into a filesize display value
+            </summary>
+            <param name="httpContext">The HttpContext</param>
+            <param name="sizeInBytes">The file size in bytes</param>
+            <returns>File size string (eg 132 MB)</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Image(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.MediaItem,System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Write out an img tag with a responsive image url
+            </summary>
+            <param name="helper"></param>
+            <param name="image">The image to write out</param>
+            <param name="aspect">The aspect ratio for the image</param>
+            <param name="widthFactor">The factor to apply to the width - can be % (eg "100%") or absolute (eg "120")</param>
+            <param name="cssClass">Css class to apply to img tag</param>
+            <param name="containerSize">The size (in grid column units) of the containing element</param>
+            <returns>Complete img tag with all required attributes</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.YouTubeVideo(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.MediaItem,System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Write out an youtube video item
+            </summary>
+            <param name="helper"></param>
+            <param name="video">The video item to write out</param>
+            <param name="widthFactor">The factor to apply to the width - can be % (eg "100%") or absolute (eg "120")</param>
+            <param name="aspect">The aspect ratio for the video</param>
+            <param name="cssClass">Css class to apply</param>
+            <param name="containerSize">The size (in grid column units) of the containing element</param>
+            <returns>Complete video markup with all required attributes</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Download(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.MediaItem)">
+            <summary>
+            Write out a download link
+            </summary>
+            <param name="helper"></param>
+            <param name="download">The download item to render</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.Media(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.MediaItem,System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Write out a media item with a responsive url
+            </summary>
+            <param name="helper"></param>
+            <param name="media">The media item to write out</param>
+            <param name="widthFactor">The factor to apply to the width - can be % (eg "100%") or absolute (eg "120")</param>
+            <param name="aspect">The aspect ratio for the image</param>
+            <param name="cssClass">Css class to apply to img tag</param>
+            <param name="containerSize">The size (in grid column units) of the containing element</param>
+            <returns>Complete media markup with all required attributes</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntity(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.EntityModel,System.Int32)">
+            <summary>
+            Renders a given Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="entity">The Entity to render.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML or an empty string if <paramref name="entity"/> is <c>null</c>.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntity(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.EntityModel,System.String,System.Int32)">
+            <summary>
+            Renders a given Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="entity">The Entity to render.</param>
+            <param name="viewName">The (qualified) name of the View used to render the entity. This overrides the View set in <see cref="!:EntityModel.MvcData"/>.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML or an empty string if <paramref name="entity"/> is <c>null</c>.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntities(System.Web.Mvc.HtmlHelper,System.Int32)">
+            <summary>
+            Renders all Entities in the current Region Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent a Region.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegion(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.RegionModel,System.Int32)">
+            <summary>
+            Renders a given Region Model
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="region">The Region Model to render. This object determines the View that will be used.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML or an empty string if <paramref name="region"/> is <c>null</c>.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegion(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Int32)">
+            <summary>
+            Renders a Region (of the current Page or Region Model) with a given name.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="regionName">The name of the Region to render. This object determines the View that will be used.</param>
+            <param name="emptyViewName">
+            The name of the View to use when no Region with the given name is found in the Page Model (i.e. no Entities exist in the given Region). 
+            If <c>null</c> (the default) then nothing will be rendered in that case.
+            If the View is not in the Core Area, the View name has to be in the format AreaName:ViewName. 
+            </param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML or an empty string if no Region with a given name is found and <paramref name="emptyViewName"/> is <c>null</c>.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent a Page.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegion(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Renders the current (Include) Page as a Region.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <returns>The rendered HTML.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegions(System.Web.Mvc.HtmlHelper,System.String,System.Int32)">
+            <summary>
+            Renders all Regions (of the current Page or Region Model), except the ones with given names.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="exclude">The (comma separated) name(s) of the Regions to exclude. Can be <c>null</c> (the default) to render all Regions.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The rendered HTML.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent a Page.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaPageMarkup(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Generates XPM markup for the current Page Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <returns>The XPM markup for the Page.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent a Page.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegionMarkup(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for the current Region Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <returns>The HTML/RDFa attributes for the Region. These should be included in an HTML start tag.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent a Region.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRegionMarkup(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.RegionModel)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Region Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="region">The Region Model to generate semantic markup for.</param>
+            <returns>The HTML/RDFa attributes for the Region. These should be included in an HTML start tag.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntityMarkup(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for the current Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <returns>The HTML/RDFa attributes for the Entity. These should be included in an HTML start tag.</returns>
+            <remarks>This method will throw an exception if the current Model does not represent an Entity.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaEntityMarkup(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.EntityModel)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="entity">The Entity Model to generate semantic markup for.</param>
+            <returns>The HTML/RDFa attributes for the Entity. These should be included in an HTML start tag.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaPropertyMarkup(System.Web.Mvc.HtmlHelper,System.String,System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property of the current Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="propertyName">The name of the property.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaPropertyMarkup(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.EntityModel,System.String,System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property of a given Entity Model.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="entity">The Entity Model.</param>
+            <param name="propertyName">The name of the property.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaPropertyMarkup(System.Web.Mvc.HtmlHelper,System.Linq.Expressions.Expression{System.Func{System.Object}},System.Int32)">
+            <summary>
+            Generates semantic markup (HTML/RDFa attributes) for a given property.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="propertyExpression">A parameterless lambda expression which evaluates to a property of the current Entity Model.</param>
+            <param name="index">The index of the property value (for multi-value properties).</param>
+            <returns>The semantic markup (HTML/RDFa attributes).</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.DxaRichText(System.Web.Mvc.HtmlHelper,Sdl.Web.Common.Models.RichText)">
+            <summary>
+            Renders a given <see cref="T:Sdl.Web.Common.Models.RichText"/> instance as HTML.
+            </summary>
+            <param name="htmlHelper">The HtmlHelper instance on which the extension method operates.</param>
+            <param name="richText">The <see cref="T:Sdl.Web.Common.Models.RichText"/> instance to render. If the rich text contains Entity Models, those will be rendered using applicable Views.</param>
+            <returns>The rendered HTML.</returns>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.HtmlHelperExtensions.GetRegions(System.Object)">
+            <summary>
+            Gets the Regions from a Page or Region Model.
+            </summary>
+            <param name="model">The Page Or Region Model</param>
+            <returns>The Regions obtained from the model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Html.UrlHelperExtensions">
+            <summary>
+            Extension methods for the UrlHelper
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.UrlHelperExtensions.VersionedContent(System.Web.Mvc.UrlHelper,System.String,System.String)">
+            <summary>
+            Gets a versioned URL (including the version number of the HTML design/assets).
+            </summary>
+            <param name="helper">The <see cref="T:System.Web.Mvc.UrlHelper"/> instance on which this extension method operates.</param>
+            <param name="relativePath">The (unversioned) URL path relative to the system folder.</param>
+            <param name="localization">Not used (deprecated).</param>
+            <returns>A versioned URL path (server-relative).</returns>
+            <remarks>
+            Versioned URLs are used to facilitate agressive caching of those assets; see <see cref="T:Sdl.Web.Mvc.Statics.StaticContentModule"/>.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.UrlHelperExtensions.ResponsiveImage(System.Web.Mvc.UrlHelper,System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Generates a responsive image URL.
+            </summary>
+            <param name="urlHelper"></param>
+            <param name="sourceImageUrl"></param>
+            <param name="aspect"></param>
+            <param name="widthFactor"></param>
+            <param name="containerSize"></param>
+            <returns>The responsive image URL.</returns>
+            <remarks>This is a thin wrapper around <see cref="M:Sdl.Web.Common.Interfaces.IMediaHelper.GetResponsiveImageUrl(System.String,System.Double,System.String,System.Int32)"/> intended to make view code simpler.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Html.UrlHelperExtensions.NormalizePageUrlPath(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Normalizes a URL path for a Page.
+            </summary>
+            <remarks>
+            The following normalization actions are taken:
+            <list type="bullet">
+                <item>Ensure the URL path is extensionless.</item>
+                <item>Ensure the URL path for an index page ends with "/index".</item>
+            </list>
+            </remarks>
+            <param name="urlPath">The input URL path.</param>
+            <returns>The normalized URL path.</returns>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Statics.BaseStaticFileManager">
+            <summary>
+            Class to manage static assets such as config and resources. This contains generic methods to serialize assets
+            based on a root boostrap json file, which recursively loads in more assets. 
+            Implementations of this class are responsible for implementing the Serialize method
+            in order to read the static asset from somewhere (eg Broker DB) and serialize it to the file system
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Mvc.Statics.StaticContentModule">
+            <summary>
+            HttpModule handling requests for static content items, including versioned URL rewriting.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Statics.StaticContentModule.Init(System.Web.HttpApplication)">
+            <summary>
+            Initialize this HttpModule.
+            </summary>
+            <param name="application">Current HttpApplication</param>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Statics.StaticContentModule.Dispose">
+            <summary>
+            Disposes the HttpModule.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Mvc.Statics.StaticContentModule.OnPreRequestHandlerExecute(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that gets triggered just before the ASP.NET Request Handler gets executed.
+            </summary>
+            <param name="sender">The <see cref="T:System.Web.HttpApplication"/> sending the event.</param>
+            <param name="eventArgs">The event arguments.</param>
+        </member>
+    </members>
+</doc>

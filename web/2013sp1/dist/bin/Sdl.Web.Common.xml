@@ -1,0 +1,1922 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sdl.Web.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Sdl.Web.Common.CacheRegions">
+            <summary>
+            Constants for the names of Cache Regions used by the DXA Framework.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Configuration.ComponentType">
+            <summary>
+            Represents an (XPM) Component Type as configured in regions.json.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.ComponentType.Schema">
+            <summary>
+            Schema URI.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.ComponentType.Template">
+            <summary>
+            Component Template URI.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Configuration.SiteConfiguration">
+            <summary>
+            Represents configuration that applies to the entire web application.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.CacheProvider">
+            <summary>
+            Gets the Cache Provider.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.ContentProvider">
+            <summary>
+            Gets the Content Provider used for obtaining the Page and Entity Models and Static Content.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.NavigationProvider">
+            <summary>
+            Gets the Content Provider used for obtaining the Navigation Models
+            </summary>.
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.ContextClaimsProvider">
+            <summary>
+            Gets the Context Claims Provider.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.LinkResolver">
+            <summary>
+            Gets the Link Resolver.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.RichTextProcessor">
+            <summary>
+            Gets the Rich Text Processor.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.ConditionalEntityEvaluator">
+            <summary>
+            Gets the Conditional Entity Evaluator.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.MediaHelper">
+            <summary>
+            Gets the Media helper used for generating responsive markup for images, videos etc.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.StaticFileManager">
+            <summary>
+            Gets the Static File Manager used for serializing and accessing static files published from the CMS (config/resources/HTML design assets etc.)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.LocalizationResolver">
+            <summary>
+            Gets the Localization Resolver used for mapping URLs to Localizations.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.UnknownLocalizationHandler">
+            <summary>
+            Gets the Handler for Unknown Localizations (failed publication URL lookups).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.InitializeProviders(System.Func{System.Type,System.Object})">
+            <summary>
+            Initializes the providers (Content Provider, Link Resolver, Media Helper, etc.) using dependency injection, i.e. obtained from configuration.
+            </summary>
+            <param name="dependencyResolver">A delegate that provide an implementation instance for a given interface type.</param>
+            <remarks>
+            This method took a parameter of type <see cref="T:System.Web.Mvc.IDependencyResolver"/> in DXA 1.1 and 1.2.
+            That created an undesirable dependency on System.Web.Mvc and therefore this has been changed to a delegate in DXA 1.3.
+            We couldn't keep the old signature (as deprecated) because that would still result in a dependency on System.Web.Mvc.
+            This means that the call in Global.asax.cs must be changed from
+            <c>SiteConfiguration.InitializeProviders(DependencyResolver.Current);</c> to
+            <c>SiteConfiguration.InitializeProviders(DependencyResolver.Current.GetService);</c>
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.RemoveVersionFromPath(System.String)">
+            <summary>
+            Removes the version number from a URL path for an asset
+            </summary>
+            <param name="path">The URL path</param>
+            <returns>The 'real' path to the asset</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.LocalizeUrl(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Ensure that a URL is using the path to the given localization
+            </summary>
+            <param name="url">The URL to localize</param>
+            <param name="localization">The localization to use</param>
+            <returns>A localized URL</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.MakeFullUrl(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Take a partial URL (so not including protocol, domain, port) and make it full by
+            Adding the protocol, domain, port etc. from the given localization
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.GetUniqueId(System.String)">
+            <summary>
+            Generic a GUID
+            </summary>
+            <param name="prefix">prefix for the GUID</param>
+            <returns>Prefixed Unique Identifier</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.GetIncludePageUrls(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the include Page URLs for a given Page Type and Localization.
+            </summary>
+            <param name="pageTypeIdentifier">The Page Type Identifier.</param>
+            <param name="localization">The Localization</param>
+            <returns>The URLs of Include Pages</returns>
+            <remarks>
+            The concept of Include Pages will be removed in a future version of DXA.
+            As of DXA 1.1 Include Pages are represented as <see cref="P:Sdl.Web.Common.Models.PageModel.Regions"/>.
+            Implementations should avoid using this method directly.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.SiteConfiguration.ViewModelRegistry">
+            <summary>
+            A registry of View Path -> View Model Type mappings to enable the correct View Model to be mapped for a given View
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.AddViewModelToRegistry(Sdl.Web.Common.Models.MvcData,System.String)">
+            <summary>
+            Adds a View->View Model Type mapping to the view model registry
+            </summary>
+            <param name="viewData">The View Data used to determine the registry key and model type</param>
+            <param name="viewPath">The path to the view</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.GetConfig(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a (localized) configuration setting
+            </summary>
+            <param name="key">The configuration key, in the format "section.name" (eg "Environment.CmsUrl")</param>
+            <param name="localization">The localization to get config for</param>
+            <returns>The configuration matching the key for the given localization</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.SiteConfiguration.GetXpmRegion(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a XPM region by name.
+            </summary>
+            <param name="name">The region name</param>
+            <param name="loc"></param>
+            <returns>The XPM region matching the name for the given module</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Configuration.Localization">
+            <summary>
+            Represents a "Localization" - a Site or variant (e.g. language).
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.Localization.LastRefresh">
+            <summary>
+            Gets the date/time at which this <see cref="T:Sdl.Web.Common.Configuration.Localization"/> was last (re-)loaded.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.EnsureInitialized">
+            <summary>
+            Ensures that the <see cref="T:Sdl.Web.Common.Configuration.Localization"/> is initialized.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.Refresh(System.Boolean)">
+            <summary>
+            Forces a refresh/reload of the <see cref="T:Sdl.Web.Common.Configuration.Localization"/> and its associated configuration.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetConfigValue(System.String)">
+            <summary>
+            Gets a configuration value with a given key.
+            </summary>
+            <param name="key">The configuration key, in the format section.name.</param>
+            <returns>The configuration value.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetResources(System.String)">
+            <summary>
+            Gets resources.
+            </summary>
+            <param name="sectionName">Optional name of the section for which to get resource. If not specified (or <c>null</c>), all resources are obtained.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetVersionedUrlPath(System.String)">
+            <summary>
+            Gets a versioned URL (including the version number of the HTML design/assets).
+            </summary>
+            <param name="relativePath">The (unversioned) URL path relative to the system folder</param>
+            <returns>A versioned URL path (server-relative).</returns>
+            <remarks>
+            Versioned URLs are used to facilitate agressive caching of those assets; see StaticContentModule.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetIncludePageUrls(System.String)">
+            <summary>
+            Gets the include Page URLs for a given Page Type/Template.
+            </summary>
+            <param name="pageTypeIdentifier">The Page Type Identifier.</param>
+            <returns>The URLs of Include Pages</returns>
+            <remarks>
+            The concept of Include Pages will be removed in a future version of DXA.
+            As of DXA 1.1 Include Pages are represented as <see cref="P:Sdl.Web.Common.Models.PageModel.Regions"/>.
+            Implementations should avoid using this method directly.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetXpmRegionConfiguration(System.String)">
+            <summary>
+            Gets XPM Region configuration for a given Region name.
+            </summary>
+            <param name="regionName">The Region name</param>
+            <returns>The XPM Region configuration or <c>null</c> if no configuration is found.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetSemanticSchema(System.String)">
+            <summary>
+            Gets Semantic Schema for a given schema identifier.
+            </summary>
+            <param name="schemaId">The schema identifier.</param>
+            <returns>The Semantic Schema configuration.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.GetSemanticVocabularies">
+            <summary>
+            Gets the Semantic Vocabularies (indexed by their prefix)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.IsStaticContentUrl(System.String)">
+            <summary>
+            Determines whether a given URL (path) refers to a static content item.
+            </summary>
+            <param name="urlPath">The URL path.</param>
+            <returns><c>true</c> if the URL refers to a static content item.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Configuration.Localization.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string that represents the current object.
+            </returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Configuration.XpmRegion">
+            <summary>
+            Represents the configuration for an XPM Region (as configured in regions.json)
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.XpmRegion.Region">
+            <summary>
+            Region name.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Configuration.XpmRegion.ComponentTypes">
+            <summary>
+            Allowed Component Types.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Constants">
+            <summary>
+            Common constants
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.DxaException">
+            <summary>
+            Base class for exceptions thrown by DXA framework code.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.DxaItemNotFoundException">
+            <summary>
+            Exception thrown by DXA Content Providers if an item is not found.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.DxaItemNotFoundException.ItemId">
+            <summary>
+            Gets the identifier of the item which is not found.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.DxaItemNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Sdl.Web.Common.DxaItemNotFoundException"/>.
+            </summary>
+            <param name="itemId">The identifier of the item which is not found.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.DxaItemNotFoundException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Sdl.Web.Common.DxaItemNotFoundException"/>.
+            </summary>
+            <param name="itemId">The identifier of the item which is not found.</param>
+            <param name="localizationId">The context Localization Identifier.</param>
+        </member>
+        <member name="T:Sdl.Web.Common.DxaUnknownLocalizationException">
+            <summary>
+            Exception thrown by DXA Content Providers if an item is not found.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.DxaUnknownLocalizationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Sdl.Web.Common.DxaUnknownLocalizationException"/>.
+            </summary>
+            <param name="url">The URL which couldn't be mapped to a Localization.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Extensions.StringExtensions.Replace(System.String,System.String,System.String,System.StringComparison)">
+            <summary>
+            Returns a new string in which all occurances of a specifid string are replaced with a new string
+            using the provided string comparison option
+            </summary>
+            <param name="str">Original string</param>
+            <param name="oldValue">Value to replace</param>
+            <param name="newValue">Replacement</param>
+            <param name="comparisonType">String comparison</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Extensions.StringExtensions.NormalizePageUrlPath(System.String)">
+            <summary>
+            Normalizes a URL path for a Page.
+            </summary>
+            <remarks>
+            The following normalization actions are taken:
+            <list type="bullet">
+                <item>Ensure the URL path is extensionless.</item>
+                <item>Ensure the URL path for an index page ends with "/index".</item>
+            </list>
+            </remarks>
+            <param name="urlPath">The input URL path (the subject for this extension method).</param>
+            <returns>The normalized URL path.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.ICacheProvider">
+            <summary>
+            Interface for Cache Provider extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ICacheProvider.Store``1(System.String,System.String,``0,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Stores a given key/value pair in a given cache region.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="region">The name of the cache region. Different cache regions can have different retention policies.</param>
+            <param name="value">The value. If <c>null</c>, this effectively removes the key from the cache.</param>
+            <param name="dependencies">An optional set of dependent item IDs. Can be used to invalidate the cached item.</param>
+            <typeparam name="T">The type of the value to add.</typeparam>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ICacheProvider.TryGet``1(System.String,System.String,``0@)">
+            <summary>
+            Tries to get a cached value for a given key and cache region.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="region">The name of the cache region. Different cache regions can have different retention policies.</param>
+            <param name="value">The cached value (output).</param>
+            <typeparam name="T">The type of the value to get.</typeparam>
+            <returns><c>true</c> if a cached value was found for the given key and cache region.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ICacheProvider.GetOrAdd``1(System.String,System.String,System.Func{``0},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Tries to gets a value for a given key and cache region. If not found, add a value obtained from a given function.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="region">The name of the cache region. Different cache regions can have different retention policies.</param>
+            <param name="addFunction">A function (delegate) used to obtain the value to add in case an existing cached value is not found.</param>
+            <param name="dependencies">An optional set of dependent item IDs. Can be used to invalidate the cached item.</param>
+            <typeparam name="T">The type of the value to get or add.</typeparam>
+            <remarks>
+            This method is thread-safe; it prevents the same key being added by multiple threads in case of a race condition.
+            </remarks>
+            <returns>The cached value.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IConditionalEntityEvaluator">
+            <summary>
+            Interface for Conditional Entity Evaluator extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IConditionalEntityEvaluator.IncludeEntity(Sdl.Web.Common.Models.EntityModel)">
+            <summary>
+            Determines whether a given Entity Model should be included based on the conditions specified on the Entity Model and the context.
+            </summary>
+            <param name="entity">The Entity Model to be evaluated.</param>
+            <returns><c>true</c> if the Entity should be included.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IContextClaimsProvider">
+            <summary>
+            Interface for the Context Claims Provider extension point
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContextClaimsProvider.GetContextClaims(System.String)">
+            <summary>
+            Gets the context claims. Either all context claims or for a given aspect name.
+            </summary>
+            <param name="aspectName">The aspect name. If <c>null</c> all context claims are returned.</param>
+            <returns>A dictionary with the claim names in format aspectName.propertyName as keys.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContextClaimsProvider.GetDeviceFamily">
+            <summary>
+            Gets the device family (an aggregated device claim determined from other context claims).
+            </summary>
+            <returns>A string representing the device family.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.ILinkResolver">
+            <summary>
+            Interface for Link Resolver extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ILinkResolver.ResolveLink(System.String,System.Boolean,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Resolves a link URI (TCM URI or site URL) to a normalized site URL.
+            </summary>
+            <param name="sourceUri">The source URI (TCM URI or site URL)</param>
+            <param name="resolveToBinary">Specifies whether a link to a Multimedia Component should be resolved directly to its Binary (<c>true</c>) or as a regular Component link.</param>
+            <param name="localization">The context Localization (optional, since the TCM URI already contains a Publication ID, but this allows resolving in a different context).</param>
+            <returns>The resolved URL.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.ILocalizationResolver">
+            <summary>
+            Interface used for Localization Resolver extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ILocalizationResolver.ResolveLocalization(System.Uri)">
+            <summary>
+            Resolves a matching <see cref="T:Sdl.Web.Common.Configuration.Localization"/> for a given URL.
+            </summary>
+            <param name="url">The URL to resolve.</param>
+            <returns>A <see cref="T:Sdl.Web.Common.Configuration.Localization"/> instance which base URL matches that of the given URL.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaUnknownLocalizationException">If no matching Localization can be found.</exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.ILocalizationResolver.GetLocalization(System.String)">
+            <summary>
+            Gets a <see cref="T:Sdl.Web.Common.Configuration.Localization"/> by its identifier.
+            </summary>
+            <param name="localizationId">The Localization identifier.</param>
+            <returns>A <see cref="T:Sdl.Web.Common.Configuration.Localization"/> instance with the given identifier.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaUnknownLocalizationException">If no matching Localization can be found.</exception>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.INavigationProvider">
+            <summary>
+            Interface for Navigation Provider extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.INavigationProvider.GetNavigationModel(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the full Navigation Model (Sitemap) for a given Localization.
+            </summary>
+            <param name="localization">The Localization.</param>
+            <returns>The Navigation Model (Sitemap root Item).</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.INavigationProvider.GetTopNavigationLinks(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets Navigation Links for the top navigation menu for the given request URL path.
+            </summary>
+            <param name="requestUrlPath">The request URL path.</param>
+            <param name="localization">The Localization.</param>
+            <returns>The Navigation Links.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.INavigationProvider.GetContextNavigationLinks(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets Navigation Links for the context navigation panel for the given request URL path.
+            </summary>
+            <param name="requestUrlPath">The request URL path.</param>
+            <param name="localization">The Localization.</param>
+            <returns>The Navigation Links.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.INavigationProvider.GetBreadcrumbNavigationLinks(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets Navigation Links for the breadcrumb trail for the given request URL path.
+            </summary>
+            <param name="requestUrlPath">The request URL path.</param>
+            <param name="localization">The Localization.</param>
+            <returns>The Navigation Links.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IOnDemandNavigationProvider">
+            <summary>
+            Interface implemented by Navigation Providers which support "on-demand" navigation (i.e. can provide navigation subtrees).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IOnDemandNavigationProvider.GetNavigationSubtree(System.String,Sdl.Web.Common.Models.Navigation.NavigationFilter,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a Navigation subtree for the given Sitemap Item.
+            </summary>
+            <param name="sitemapItemId">The context <see cref="T:Sdl.Web.Common.Models.SitemapItem"/> identifier. Can be <c>null</c>.</param>
+            <param name="filter">The <see cref="T:Sdl.Web.Common.Models.Navigation.NavigationFilter"/> used to specify which information to put in the subtree.</param>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>A set of Sitemap Items representing the requested subtree.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IRichTextProcessor">
+            <summary>
+            Interface for Rich Text Processor extension point.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IRichTextProcessor.ProcessRichText(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Processes rich text (XHTML) content.
+            </summary>
+            <param name="xhtml">The rich text content (XHTML fragment) to be processed.</param>
+            <param name="localization">Context localization.</param>
+            <returns>The processed rich text content as a mix of HTML fragments and Entity Models.</returns>
+            <remarks>
+            Typical rich text processing tasks: 
+            <list type="bullet">
+                <item>Convert XHTML to plain HTML</item>
+                <item>Resolve inline links</item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IUnknownLocalizationHandler">
+            <summary>
+            Interface for Unknown Localization Handler extension point.
+            </summary>
+            <remarks>
+            This extension points allows an implementation to intercept request for an Unknown Localization and optionally provide a different HTTP Response
+            than the default HTTP 404 with a plain-text error message.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IUnknownLocalizationHandler.HandleUnknownLocalization(Sdl.Web.Common.DxaUnknownLocalizationException,System.Web.HttpRequest,System.Web.HttpResponse)">
+            <summary>
+            Handles a Request for an Unknown Localization (i.e. the request URL doesn't map to a Publication).
+            </summary>
+            <param name="exception">The <see cref="T:Sdl.Web.Common.DxaUnknownLocalizationException"/> exception.</param>
+            <param name="request">The HTTP Request.</param>
+            <param name="response">The HTTP Response. In order to return a different HTTP Response than the default, 
+            the response headers and body should be set and <see cref="M:System.Web.HttpResponse.End"/> should be called to terminate the HTTP processing pipeline.
+            </param>
+            <returns>May return a <see cref="T:Sdl.Web.Common.Configuration.Localization"/> instance if the handler manages to resolve the Localization. If <c>null</c> is returned, default error handling will be applied.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.LegacyContentResolverFacade">
+            <summary>
+            Facade for the legacy Content Resolver extension to support legacy clients of this interface.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Interfaces.IContentProvider">
+            <summary>
+            Interface for Content Provider extension point.
+            </summary>
+            <remarks>
+            Although this interface existed in STRI 1.0, it is not compatible in DXA 1.1.
+            <list type="bullet">
+                <item><see cref="M:Sdl.Web.Common.Interfaces.IContentProvider.GetPageModel(System.String,System.Boolean)"/> and <see cref="M:Sdl.Web.Common.Interfaces.IContentProvider.GetEntityModel(System.String,Sdl.Web.Common.Configuration.Localization)"/> now returned strongly typed results (DXA View Models).</item>
+                <item>All methods now have a parameter to explicitly pass in the context <see cref="T:Sdl.Web.Common.Configuration.Localization"/> (rather than implicitly through <see cref="!:WebRequestContext.Localization"/>).</item>
+                <item>GetPageContent and GetEntityContent have been removed; these would leak the underlying data representation.</item>
+                <item>GetNavigationModel has been moved to a separate <see cref="T:Sdl.Web.Common.Interfaces.INavigationProvider"/> interface.</item>
+                <item><see cref="M:Sdl.Web.Common.Interfaces.IContentProvider.GetStaticContentItem(System.String,Sdl.Web.Common.Configuration.Localization)"/> method has been added. This replaces <see cref="M:Sdl.Web.Common.Interfaces.IStaticFileManager.Serialize(System.String,Sdl.Web.Common.Configuration.Localization,System.Boolean)"/>.</item>
+                <Item><see cref="P:Sdl.Web.Common.Interfaces.IContentProvider.ContentResolver"/> property has been deprecated, because <see cref="T:Sdl.Web.Common.Interfaces.IContentResolver"/> is deprecated 
+                    and the new extension points can be accessed through <see cref="T:Sdl.Web.Common.Configuration.SiteConfiguration"/>.</Item>
+                <Item><see cref="M:Sdl.Web.Common.Interfaces.IContentProvider.PopulateDynamicList(Sdl.Web.Common.Models.DynamicList)"/> no longer returns a value; the Content List provided as parameter is populated.</Item>
+            </list>
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.GetPageModel(System.String,System.Boolean)">
+            <summary>
+            Gets a Page Model for a given URL.
+            </summary>
+            <param name="urlPath">The URL.</param>
+            <param name="addIncludes">Indicates whether include Pages should be expanded.</param>
+            <returns>The Page Model.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.PopulateDynamicList(Sdl.Web.Common.Models.DynamicList)">
+            <summary>
+            Populates a Dynamic List by executing the query it specifies.
+            </summary>
+            <param name="dynamicList">The Dynamic List which specifies the query and is to be populated.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.GetPageModel(System.String,Sdl.Web.Common.Configuration.Localization,System.Boolean)">
+            <summary>
+            Gets a Page Model for a given URL path.
+            </summary>
+            <param name="urlPath">The URL path (unescaped).</param>
+            <param name="localization">The context Localization.</param>
+            <param name="addIncludes">Indicates whether include Pages should be expanded.</param>
+            <returns>The Page Model.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaItemNotFoundException">If no Page Model exists for the given URL.</exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.GetEntityModel(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets an Entity Model for a given Entity Identifier.
+            </summary>
+            <param name="id">The Entity Identifier.</param>
+            <param name="localization">The context Localization.</param>
+            <returns>The Entity Model.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaItemNotFoundException">If no Entity Model exists for the given URL.</exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.GetStaticContentItem(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a Static Content Item (binary) for a given URL path.
+            </summary>
+            <param name="urlPath">The URL path (unescaped).</param>
+            <param name="localization">The context Localization.</param>
+            <returns>The Static Content Item.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaItemNotFoundException">If no Static Content Item exists for the given URL.</exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Interfaces.IContentProvider.PopulateDynamicList(Sdl.Web.Common.Models.DynamicList,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Populates a Dynamic List by executing the query it specifies.
+            </summary>
+            <param name="dynamicList">The Dynamic List which specifies the query and is to be populated.</param>
+            <param name="localization">The context Localization.</param>
+        </member>
+        <member name="T:Sdl.Web.Common.Logging.Tracer">
+            <summary>
+            Used for tracing method entry/exit calls.
+            </summary>
+            <remarks>
+            <para>
+            Method entry trace is output when a <c>Tracer</c> instance is created.
+            Method exit trace (including method duration) is output when the instance is disposed.
+            In this manner, method entry/exit tracing can easily be achieved in code by wrapping 
+            the method's entire implementation in a <c>using (new Tracer())</c> statement.
+            </para>
+            <example><code>
+            void TracerTest()
+            {
+              using (new Tracer())
+              {
+                // Entire method implementation goes here.
+              }
+            }
+            </code></example>
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Sdl.Web.Common.Logging.Tracer"/> class. 
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Logging.Tracer"/> class. 
+            Results in a method entry trace being output.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.#ctor(System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Logging.Tracer"/> class using given method parameter values.
+            Results in a method entry trace being output.
+            </summary>
+            <param name="parameters">The method parameter values to include in the trace.</param>
+            <remarks>
+            For optimal performance when tracing is disabled, perform as little as possible operations to get the parameter values.
+            If you have a parameter of a type which implements <see cref="M:System.Object.ToString"/>, don't call this method yourself;
+            the Tracer implementation will call it only when tracing is enabled.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.System#IDisposable#Dispose">
+            <summary>
+            Disposes the instance. Results in a method exit trace being output.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.TraceMethodEntry(System.Object[])">
+            <summary>
+            Outputs a method entry trace.
+            </summary>
+            <param name="parameters">The parameter values to include in the trace.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.TraceMethodExit">
+            <summary>
+            Outputs a method exit trace.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Logging.Tracer.ConvertParameterToString(System.Object)">
+            <summary>
+            Converts the parameter supplied to the Tracer to a string and limit the value to the in configuration defined number of characters.
+            </summary>
+            <param name="param">The parameter to convert.</param>
+            <returns>A string that contains the value of the supplied parameter.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Mapping.FieldSemantics">
+            <summary>
+            Represents the semantics of a Schema field: Prefix, Entity and Property.
+            </summary>
+            <remarks>
+            Deserialized from JSON in schemas.json.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.FieldSemantics.Property">
+            <summary>
+            Semantic property name.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.#ctor">
+            <summary>
+            Initializes a new empty instance of the <see cref="T:Sdl.Web.Common.Mapping.FieldSemantics"/> class.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Mapping.FieldSemantics"/> class, using default semantic vocabulary prefix.
+            </summary>
+            <param name="entity">Entity name</param>
+            <param name="property">Semantic property name</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Mapping.FieldSemantics"/> class.
+            </summary>
+            <param name="prefix">Vocabulary prefix</param>
+            <param name="entity">Entity name</param>
+            <param name="property">Semantic property name</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.ToString">
+            <summary>
+            Provides a string representation of the object.
+            </summary>
+            <returns>A string representation in format <c>Prefix:Entity:Property</c>.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current <see cref="T:Sdl.Web.Common.Mapping.FieldSemantics"/>.
+            </summary>
+            <returns>
+            <c>true</c> if the specified object is equal to the current one.
+            </returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.FieldSemantics.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:Sdl.Web.Common.Mapping.FieldSemantics"/>.
+            </returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Mapping.SchemaSemantics">
+            <summary>
+            Represents the semantics of a Schema: Prefix and Entity.
+            </summary>
+            <remarks>
+            Deserialized from JSON in schemas.json.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SchemaSemantics.Prefix">
+            <summary>
+            Vocabulary prefix.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SchemaSemantics.Entity">
+            <summary>
+            Entity name.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.#ctor">
+            <summary>
+            Initializes a new empty instance of the <see cref="T:Sdl.Web.Common.Mapping.SchemaSemantics"/> class.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Mapping.SchemaSemantics"/> class, using default semantic vocabulary prefix.
+            </summary>
+            <param name="entity">Entity name.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sdl.Web.Common.Mapping.SchemaSemantics"/> class.
+            </summary>
+            <param name="prefix">Vocabulary prefix</param>
+            <param name="entity">Entity name</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.ToString">
+            <summary>
+            Provides a string representation of the object.
+            </summary>
+            <returns>A string representation in format <c>Prefix:Entity</c>.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current <see cref="T:Sdl.Web.Common.Mapping.SchemaSemantics"/>.
+            </summary>
+            <returns>
+            <c>true</c> if the specified object is equal to the current one.
+            </returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SchemaSemantics.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:Sdl.Web.Common.Mapping.SchemaSemantics"/>.
+            </returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Mapping.SemanticMapping">
+            <summary>
+            General Semantic Mapping Class which reads schema mapping from json files on disk
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Mapping.SemanticMapping.DefaultPrefix">
+            <summary>
+            Default semantic vocabulary prefix.
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Mapping.SemanticMapping.DefaultVocabulary">
+            <summary>
+            Default semantic vocabulary.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticMapping.GetQualifiedTypeName(System.String,System.String)">
+            <summary>
+            Gets a qualified (semantic) type name consisting of vocabulary ID and (local) type name.
+            </summary>
+            <param name="typeName">The (local) type name.</param>
+            <param name="vocab">The vocabulary ID or <c>null</c> for the default/core vocabulary.</param>
+            <returns>The qualified type name.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticMapping.GetQualifiedTypeName(System.String,System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a qualified (semantic) type name consisting of vocabulary ID and (local) type name.
+            </summary>
+            <param name="typeName">The (local) type name.</param>
+            <param name="prefix">The vocabulary prefix.</param>
+            <param name="localization">The context Localization.</param>
+            <returns>The qualified type name.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticMapping.GetVocabulary(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets semantic vocabulary by prefix.
+            </summary>
+            <param name="prefix">The prefix</param>
+            <param name="loc">The localization</param>
+            <returns>Semantic vocabulary for the given prefix</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticMapping.GetPrefix(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets prefix for semantic vocabulary.
+            </summary>
+            <param name="vocab">Vocabulary name</param>
+            <param name="loc">The localization</param>
+            <returns>Prefix for this semantic vocabulary</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticMapping.GetSchema(System.String,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets a semantic schema by id.
+            </summary>
+            <param name="id">The schema ID</param>
+            <param name="loc">The localization</param>
+            <returns>The semantic schema matching the id for the given module</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Mapping.SemanticSchema">
+            <summary>
+            Represents a Semantic Schema
+            </summary>
+            <remarks>
+            Deserialized from JSON in schemas.json.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchema.Id">
+            <summary>
+            Schema (item) ID.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchema.RootElement">
+            <summary>
+            Schema root element name.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchema.Fields">
+            <summary>
+            Schema fields.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchema.Semantics">
+            <summary>
+            Schema semantics.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchema.GetEntityNames">
+            <summary>
+            Get a list with schema entity names for its vocabularies. 
+            Using vocabulary name rather than prefix from json, as the prefixes can be different in the view. 
+            </summary>
+            <remarks>
+            Using <see cref="T:System.Linq.ILookup`2"/> rather than a <see cref="T:System.Collections.Generic.Dictionary`2"/> because it will allow for duplicate keys.
+            Duplicate keys make no sense, but we might have them, so this prevents runtime exceptions.
+            </remarks>
+            <returns>List with entity names indexed by vocabulary</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchema.FindFieldBySemantics(Sdl.Web.Common.Mapping.FieldSemantics)">
+            <summary>
+            Find <see cref="T:Sdl.Web.Common.Mapping.SemanticSchemaField"/> with given semantics.
+            </summary>
+            <param name="fieldSemantics">The semantics to check against</param>
+            <returns>Schema field or one of its embedded fields that match with the given semantics, null if a match cannot be found</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchema.GetSemanticTypeNames">
+            <summary>
+            Gets semantic type names (qualified with Vocabulary ID) for the Schema.
+            </summary>
+            <returns>The semantic type names.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchema.GetModelTypeFromSemanticMapping(System.Type)">
+            <summary>
+            Determine a Model Type based on semantic mappings (and a given base model type).
+            </summary>
+            <param name="baseModelType">The base type as obtained from the View Model.</param>
+            <returns>The given base Model Type or a subclass if a more specific class can be resolved via semantic mapping.</returns>
+            <remarks>
+            This method makes it possible (for example) to let the <see cref="!:Teaser.Media"/> property get an instance of <see cref="!:Image"/> 
+            rather than just <see cref="T:Sdl.Web.Common.Models.MediaItem"/> (the type of the View Model property).
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchema.ToString">
+            <summary>
+            Provides a string representation of the object.
+            </summary>
+            <returns>A string representation containing the Schema ID and Root Element name</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Mapping.SemanticSchemaField">
+            <summary>
+            Represents a Semantic Schema Field.
+            </summary>
+            <remarks>
+            Deserialized from JSON in schemas.json.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.Name">
+            <summary>
+            XML field name.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.Path">
+            <summary>
+            XML field path.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.IsMetadata">
+            <summary>
+            Is field a metadata field?
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.IsEmbedded">
+            <summary>
+            Is field an embedded field?
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.IsMultiValue">
+            <summary>
+            Is field multivalued?
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.Semantics">
+            <summary>
+            Field semantics.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Mapping.SemanticSchemaField.Fields">
+            <summary>
+            Embedded fields.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchemaField.ContainsSemantics(Sdl.Web.Common.Mapping.FieldSemantics)">
+            <summary>
+            Check if current field contains given semantics.
+            </summary>
+            <param name="fieldSemantics">The semantics to check against</param>
+            <returns>True if this field contains given semantics, false otherwise</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchemaField.HasSemantics(Sdl.Web.Common.Mapping.FieldSemantics)">
+            <summary>
+            Check if current field has given semantics.
+            </summary>
+            <param name="fieldSemantics">The semantics to check against</param>
+            <returns><c>true</c> if this field has given semantics, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchemaField.FindFieldBySemantics(Sdl.Web.Common.Mapping.FieldSemantics)">
+            <summary>
+            Find <see cref="T:Sdl.Web.Common.Mapping.SemanticSchemaField"/> with given semantics.
+            </summary>
+            <param name="fieldSemantics">The semantics to check against</param>
+            <param name="includeSelf">If <c>true</c> the field itself will be returned if it matches the given semantics.</param>
+            <returns>This field or one of its embedded fields that match with the given semantics, null if a match cannot be found</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Mapping.SemanticSchemaField.ToString">
+            <summary>
+            Provides a string representation of the object.
+            </summary>
+            <returns>A string representation containing the field Name and Path</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.DynamicList">
+            <summary>
+            Abstract base class for Entity Models which get populated dynamically.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.DynamicList.ExtractSyndicationFeedItems(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Extracts syndication feed items.
+            </summary>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The extracted syndication feed items; a concatentation of syndication feed items provided by <see cref="P:Sdl.Web.Common.Models.DynamicList.QueryResults"/> (if any).</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.DynamicList.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.EclItem">
+            <summary>
+            Abstract base class for View Models representing ECL items.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EclItem.EclUri">
+            <summary>
+            ECL URI.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EclItem.EclDisplayTypeId">
+            <summary>
+            ECL Display Type ID.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EclItem.EclTemplateFragment">
+            <summary>
+            ECL Template Fragment.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EclItem.EclExternalMetadata">
+            <summary>
+            ECL External Metadata.
+            </summary>
+            <value>
+            Keys are the field names. Values can be simple types (string, double, DateTime), nested IDictionaries and enumerables of those types. 
+            </value>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EclItem.GetEclExternalMetadataValue(System.String)">
+            <summary>
+            Convenience method to obtain a single value from ECL External Metadata.
+            </summary>
+            <param name="key">The metadata key. This can contain slashes for nested metadata (e.g. "Program/Asset/Title").</param>
+            <returns>The metadata value. Can be <c>null</c> if the key does not resolve to a value.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EclItem.GetXpmMarkup(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the rendered XPM markup
+            </summary>
+            <remarks>
+            ECL items will use ECL URI rather than TCM URI in XPM markup
+            </remarks>
+            <param name="localization">The context Localization.</param>
+            <returns>The XPM markup.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EclItem.ToHtml(System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Renders an HTML representation of the ECL Item.
+            </summary>
+            <param name="widthFactor">The factor to apply to the width - can be % (eg "100%") or absolute (eg "120").</param>
+            <param name="aspect">The aspect ratio to apply.</param>
+            <param name="cssClass">Optional CSS class name(s) to apply.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The HTML representation.</returns>
+            <remarks>
+            This method is used by the <see cref="M:Sdl.Web.Common.Models.IRichTextFragment.ToHtml"/> implementation and by the HtmlHelperExtensions.Media implementation.
+            Both cases should be avoided, since HTML rendering should be done in View code rather than in Model code.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EclItem.ReadFromXhtmlElement(System.Xml.XmlElement)">
+            <summary>
+            Read properties from XHTML element.
+            </summary>
+            <param name="xhtmlElement">XHTML element</param>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.EntityModel">
+            <summary>
+            Abstract base class for View Models for Entities.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EntityModel.Id">
+            <summary>
+            Gets or sets the identifier for the Entity.
+            </summary>
+            <remarks>
+            Note that class <see cref="T:Sdl.Web.Common.Models.EntityModel"/> is also used for complex types which are not really Entities and thus don't have an Identifier.
+            Therefore, <see cref="P:Sdl.Web.Common.Models.EntityModel.Id"/> can be <c>null</c>.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.EntityModel.XpmPropertyMetadata">
+            <summary>
+            Gets or sets metadata used to render XPM property markup.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.ToHtml">
+            <summary>
+            Gets an HTML representation of the Entity Model.
+            </summary>
+            <returns>An HTML representation.</returns>
+            <remarks>
+            This method is used when the <see cref="T:Sdl.Web.Common.Models.EntityModel"/> is part of a <see cref="T:Sdl.Web.Common.Models.RichText"/> instance which is mapped to a string property.
+            In this case HTML rendering happens during model mapping (by means of this method), which is not ideal.
+            Preferably, the model property should be of type <see cref="T:Sdl.Web.Common.Models.RichText"/> and the View should use @Html.DxaRichText() to get the rich text rendered as HTML.
+            </remarks>
+            <exception cref="T:System.NotSupportedException">
+            This method must be overridden in a concrete <see cref="T:Sdl.Web.Common.Models.EntityModel"/> subclass which is to be embedded in rich text.
+            For example, see <see cref="!:YouTubeVideo.ToHtml"/>.
+            </exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.GetDefaultView(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the default View for this Entity Model (if any).
+            </summary>
+            <param name="localization">The context Localization.</param>
+            <remarks>
+            If this method is overridden in a subclass, it will be possible to render "embedded" Entity Models of that type using the Html.DxaEntity method.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.GetXpmMarkup(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the rendered XPM markup
+            </summary>
+            <param name="localization">The context Localization.</param>
+            <returns>The XPM markup.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Entity Model.
+            </summary>
+            <returns>
+            <c>true</c> if the specified object in an Entity Model with the same <see cref="P:Sdl.Web.Common.Models.EntityModel.Id"/> as the current one.
+            </returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current Entity Model.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string containing the type and identifier of the Entity.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.EntityModel.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.Navigation.TaxonomyNode">
+            <summary>
+            Represents a special kind of <see cref="T:Sdl.Web.Common.Models.SitemapItem"/> which is used for Taxonomy Nodes.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.Navigation.TaxonomyNode.CreateLink(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Creates a <see cref="T:Sdl.Web.Common.Models.Link"/> out of this <see cref="T:Sdl.Web.Common.Models.SitemapItem"/>.
+            </summary>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/></param>
+            <returns>The <see cref="T:Sdl.Web.Common.Models.Link"/> Entity Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.ISyndicationFeedItemProvider">
+            <summary>
+            Interface implemented by View Model Types that can provide syndication feed items.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.PageModelWithHttpResponseData">
+            <summary>
+            Represents the View Model for a Page with additional HTTP Response data (cookies, headers).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModelWithHttpResponseData.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Sdl.Web.Common.Models.PageModelWithHttpResponseData"/>.
+            </summary>
+            <param name="id">The identifier of the Page.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModelWithHttpResponseData.SetHttpResponseData(System.Web.HttpResponse)">
+            <summary>
+            Sets the HTTP Response data (cookies, header).
+            </summary>
+            <param name="httpResponse">The HTTP Response to set the data on.</param>
+            <remarks>
+            This should only be used to set HTTP headers (incl. cookies); setting the HTTP response body is a responsibility of the Page Controller.
+            This method is called by the DXA Page Controller before rendering the body.
+            </remarks>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.RedirectModel">
+            <summary>
+            Pseudo View Model respresenting a Redirection to a given URL.
+            </summary>
+            <remarks>
+            A Controller's EnrichModel implementation can return this pseudo View Model in order to trigger an HTTP Redirect.
+            </remarks>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.RichText">
+            <summary>
+            Represents Rich Text which can be a mix of HTML fragments and Entity Models.
+            </summary>
+            <remarks>
+            <see cref="M:Sdl.Web.Common.Interfaces.IRichTextProcessor.ProcessRichText(System.String,Sdl.Web.Common.Configuration.Localization)"/> converts rich text XHTML into a <see cref="T:Sdl.Web.Common.Models.RichText"/> instance.
+            This may be mapped to a View Model property of type <see cref="T:System.String"/>, in which case <see cref="M:Sdl.Web.Common.Models.RichText.ToString"/> is used to render the HTML during the model mapping.
+            If <see cref="T:Sdl.Web.Common.Models.RichText"/> contains any Entity Models, these will be rendered using their <see cref="M:Sdl.Web.Common.Models.EntityModel.ToHtml"/> method.
+            Preferably, the View Model property is of type <see cref="T:Sdl.Web.Common.Models.RichText"/> and the View uses @Html.DxaRichText to render the HTML.
+            In the latter case, if the <see cref="T:Sdl.Web.Common.Models.RichText"/> contains any Entity Models, these will be rendered using an appropriate View.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.RichText.Fragments">
+            <summary>
+            Gets the fragments (HTML fragments or Entity Models) of which the rich text consists.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RichText"/> instance for a given piece of HTML.
+            </summary>
+            <param name="html">The piece of HTML.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.#ctor(System.Collections.Generic.IEnumerable{Sdl.Web.Common.Models.IRichTextFragment})">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RichText"/> instance for a given set of fragments.
+            </summary>
+            <param name="fragments"></param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>A string containing the rich text as HTML.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.IsEmpty">
+            <summary>
+            Determines whether the <see cref="T:Sdl.Web.Common.Models.RichText"/> instance is empty.
+            </summary>
+            <returns><c>true</c> if the <see cref="T:Sdl.Web.Common.Models.RichText"/> instance is empty.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.IsNullOrEmpty(Sdl.Web.Common.Models.RichText)">
+            <summary>
+            Determines whether a given <see cref="T:Sdl.Web.Common.Models.RichText"/> instance is <c>null</c> or empty.
+            </summary>
+            <param name="richText">The <see cref="T:Sdl.Web.Common.Models.RichText"/> instance to test.</param>
+            <returns><c>true</c> if <paramref name="richText"/> is <c>null</c> or empty.</returns>
+            <remarks>This is a cheaper alternative to <see cref="M:System.String.IsNullOrEmpty(System.String)"/> on a <see cref="T:Sdl.Web.Common.Models.RichText"/> instance using implicit string cast.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.op_Implicit(Sdl.Web.Common.Models.RichText)~System.String">
+            <summary>
+            Implicit cast to string
+            </summary>
+            <param name="richText">The <see cref="T:Sdl.Web.Common.Models.RichText"/> instance to be cast to string.</param>
+            <returns>A string containing the richt text as HTML.</returns>
+            <remarks>
+            This implicit cast operator facilitates migration of View Model properties from type string to <see cref="T:Sdl.Web.Common.Models.RichText"/>: code that still assumes it is a string will still work.
+            However, it should be avoided. The reason to use type <see cref="T:Sdl.Web.Common.Models.RichText"/> in the View Model is to be able to use Html.DxaRichText in the View code.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichText.op_Implicit(System.String)~Sdl.Web.Common.Models.RichText">
+            <summary>
+            Implicit cast from string
+            </summary>
+            <param name="html">The string containing HTML.</param>
+            <returns>A new <see cref="T:Sdl.Web.Common.Models.RichText"/> instance representing the HTML.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.IRichTextFragment">
+            <summary>
+            Interface implemented by class <see cref="T:Sdl.Web.Common.Models.RichTextFragment"/> and <see cref="T:Sdl.Web.Common.Models.EntityModel"/> to allow a mix of these in <see cref="T:Sdl.Web.Common.Models.RichText"/>.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.IRichTextFragment.ToHtml">
+            <summary>
+            Renders the rich text fragment as HTML.
+            </summary>
+            <returns>The rendered HTML.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.RichTextFragment">
+            <summary>
+            Represents a rich text HTML fragment.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.RichTextFragment.Html">
+            <summary>
+            The piece of HTML which this fragment represents.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichTextFragment.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RichTextFragment"/> instance for a given piece of HTML.
+            </summary>
+            <param name="html">The piece of HTML.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichTextFragment.ToHtml">
+            <summary>
+            Renders the rich text fragment as HTML.
+            </summary>
+            <returns>The HTML which this fragment represents.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RichTextFragment.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>A string containing the rich text fragment.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.EntityBase">
+            <summary>
+            Legacy base class for View Models for Entities.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MediaItem.GetFriendlyFileSize">
+            <summary>
+            Gets the file size with units.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MediaItem.GetIconClass">
+            <summary>
+            Gets the name of a CSS class representing the Icon for this Media Item.
+            </summary>
+            <returns>The CSS class name.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MediaItem.ToHtml">
+            <summary>
+            Renders an HTML representation of the Entity Model.
+            </summary>
+            <returns>An HTML representation.</returns>
+            <remarks>
+            This method is used when the Entity Model is part of a <see cref="T:Sdl.Web.Common.Models.RichText"/> instance which is mapped to a string property.
+            In this case HTML rendering happens during model mapping, which is not ideal.
+            Preferably, the model property should be of type <see cref="T:Sdl.Web.Common.Models.RichText"/> and the View should use @Html.DxaRichText() to get the rich text rendered as HTML.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MediaItem.ToHtml(System.String,System.Double,System.String,System.Int32)">
+            <summary>
+            Renders an HTML representation of the Media Item.
+            </summary>
+            <param name="widthFactor">The factor to apply to the width - can be % (eg "100%") or absolute (eg "120").</param>
+            <param name="aspect">The aspect ratio to apply.</param>
+            <param name="cssClass">Optional CSS class name(s) to apply.</param>
+            <param name="containerSize">The size (in grid column units) of the containing element.</param>
+            <returns>The HTML representation.</returns>
+            <remarks>
+            This method is used by the <see cref="M:Sdl.Web.Common.Models.IRichTextFragment.ToHtml"/> implementation and by the HtmlHelperExtensions.Media implementation.
+            Both cases should be avoided, since HTML rendering should be done in View code rather than in Model code.
+            </remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MediaItem.ReadFromXhtmlElement(System.Xml.XmlElement)">
+            <summary>
+            Read properties from XHTML element.
+            </summary>
+            <param name="xhtmlElement">XHTML element</param>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.Tag.DisplayText">
+            <summary>
+            Text to display.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.Tag.Key">
+            <summary>
+            Unique identifier for the tag (within the given domain).
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.Tag.TagCategory">
+            <summary>
+            The domain/category/taxonomy identifier for the tag.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.MvcData">
+            <summary>
+            Represents data about the Model, View and Controller
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.#ctor">
+            <summary>
+            Initializes a new empty <see cref="T:Sdl.Web.Common.Models.MvcData"/> instance.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.MvcData"/> instance for a given qualified View name.
+            </summary>
+            <param name="qualifiedViewName">The qualified View name with format AreaName:ControllerName:ViewName.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.#ctor(Sdl.Web.Common.Models.MvcData)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.MvcData"/> instance which is a copy of another.
+            </summary>
+            <param name="other">The other <see cref="T:Sdl.Web.Common.Models.MvcData"/> to copy.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current object.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.MvcData.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string that represents the current object.
+            </returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.SitemapItem">
+            <summary>
+            Represents a node in the Navigation Model (site map).
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.SitemapItem.Types">
+            <summary>
+            Represents the possible values for <see cref="P:Sdl.Web.Common.Models.SitemapItem.Type"/>
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.SitemapItem.CreateLink(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Creates a <see cref="T:Sdl.Web.Common.Models.Link"/> out of this <see cref="T:Sdl.Web.Common.Models.SitemapItem"/>.
+            </summary>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/></param>
+            <returns>The <see cref="T:Sdl.Web.Common.Models.Link"/> Entity Model.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.SitemapItem.FindSitemapItem(System.String)">
+            <summary>
+            Finds a SitemapItem with a given URL path in the Navigation subtree rooted by this <see cref="T:Sdl.Web.Common.Models.SitemapItem"/>.
+            </summary>
+            <param name="urlPath">The URL path to search for.</param>
+            <returns>The <see cref="T:Sdl.Web.Common.Models.SitemapItem"/> with the given URL path or <c>null</c> if no such item is found.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.PageModel">
+            <summary>
+            Represents the View Model for a Page
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.PageModel.Regions">
+            <summary>
+            Gets the Page Regions.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.PageModel.NoCache">
+            <summary>
+            Specifies whether the Page Model can be cached or not.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModel.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of PageModel.
+            </summary>
+            <param name="id">The identifier of the Page.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModel.GetXpmMarkup(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the rendered XPM markup
+            </summary>
+            <param name="localization">The context Localization.</param>
+            <returns>The XPM markup.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModel.ExtractSyndicationFeedItems(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Extracts syndication feed items.
+            </summary>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The extracted syndication feed items; a concatentation of syndication feed items provided by <see cref="P:Sdl.Web.Common.Models.PageModel.Regions"/> (if any).</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageModel.FilterConditionalEntities">
+            <summary>
+            Filters (i.e. removes) conditional Entities which don't meet the conditions.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.PageBase">
+            <summary>
+            Legacy base class for page content, used for includes and other 'non-concrete' pages. 
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.PageBase.Id">
+            <summary>
+            Gets or sets the identifier for the Page.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.PageBase.Title">
+            <summary>
+            Gets or sets the Title of the Page which is typically rendered as HTML title tag.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.PageBase.PageData">
+            <summary>
+            For storing system data (for example page id and modified date for xpm markup).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageBase.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of PageBase
+            </summary>
+            <param name="id">The identifier for the Page.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageBase.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Page Model.
+            </summary>
+            <returns>
+            <c>true</c> if the specified object in an Page Model with the same <see cref="P:Sdl.Web.Common.Models.PageBase.Id"/> as the current one.
+            </returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageBase.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current Page Model.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageBase.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string containing the type, identifier and title of the Page.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.PageBase.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.Region">
+            <summary>
+            Represents the View Model for a Page Region.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.Region.Name">
+            <summary>
+            Gets or sets the name of the Region.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.Region.Items">
+            <summary>
+            Items are the raw entities that make up the page (eg Component Presentations, or other regions).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.Region.#ctor">
+            <summary>
+            Initializes a new Region instance.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.Region.#ctor(System.String)">
+            <summary>
+            Initializes a new Region instance with a given name
+            </summary>
+            <param name="name">The name of the Region.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.Region.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.RegionModel">
+            <summary>
+            Represents the View Model for a Page Region.
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Models.RegionModel.IncludedFromPageIdXpmMetadataKey">
+            <summary>
+            The XPM metadata key used for the ID of the (Include) Page from which the Region originates. Avoid using this in implementation code because it may change in a future release.
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Models.RegionModel.IncludedFromPageTitleXpmMetadataKey">
+            <summary>
+            The XPM metadata key used for the title of the (Include) Page from which the Region originates. Avoid using this in implementation code because it may change in a future release.
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Models.RegionModel.IncludedFromPageFileNameXpmMetadataKey">
+            <summary>
+            The XPM metadata key used for the file name of the (Include) Page from which the Region originates. Avoid using this in implementation code because it may change in a future release.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.RegionModel.Entities">
+            <summary>
+            Gets the Entities that the Region contains.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.RegionModel.Regions">
+            <summary>
+            Gets the (nested) Regions within this Region.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RegionModel"/> instance.
+            </summary>
+            <param name="name">The name of the Region.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RegionModel"/> instance for an empty/non-existing Region.
+            </summary>
+            <param name="name">The name of the Region.</param>
+            <param name="qualifiedViewName">The qualified name of the View to use to render the Region. Format: format AreaName:ControllerName:ViewName.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.GetXpmMarkup(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the rendered XPM markup
+            </summary>
+            <param name="localization">The context Localization.</param>
+            <returns>The XPM markup.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Region Model, i.e. it has the same name.
+            </summary>
+            <returns>
+            <c>true</c> if the specified object is a <see cref="T:Sdl.Web.Common.Models.RegionModel"/> with the same name as this one.
+            </returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current Region Model (based on its name).
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string containing the type and name of the Region.
+            </returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.ExtractSyndicationFeedItems(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Extracts syndication feed items.
+            </summary>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The extracted syndication feed items; a concatentation of syndication feed items provided by <see cref="P:Sdl.Web.Common.Models.RegionModel.Entities"/> (if any).</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModel.FilterConditionalEntities">
+            <summary>
+            Filters (i.e. removes) conditional Entities which don't meet the conditions.
+            </summary>
+            <remarks>
+            Applies to this Region and all its nested Regions.
+            </remarks>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.WebPage">
+            <summary>
+            Legacy Model for the data that is used to render a web page.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.WebPage.Url">
+            <summary>
+            Gets or sets the URL path of the Page.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.WebPage.Meta">
+            <summary>
+            Gets or sets the Page metadata which is typically rendered as HTML meta tags (name/value pairs).
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.WebPage.Includes">
+            <summary>
+            Gets or sets the Page Includes. The dictionary keys are the include names.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.WebPage.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of WebPage
+            </summary>
+            <param name="id">The identifier for the Page.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.WebPage.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.RegionModelSet">
+            <summary>
+            Represents a set of Region Models which can be indexed by name.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModelSet.#ctor">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RegionModelSet"/> instance for an empty set.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModelSet.#ctor(System.Collections.Generic.IEnumerable{Sdl.Web.Common.Models.RegionModel})">
+            <summary>
+            Initializes a new <see cref="T:Sdl.Web.Common.Models.RegionModelSet"/> instance from a given set of Region Models.
+            </summary>
+            <param name="regionModels">The set of Region Models</param>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.RegionModelSet.Item(System.String)">
+            <summary>
+            Gets a Region by its name (indexer).
+            </summary>
+            <param name="name">The name of the Region.</param>
+            <returns>A Region with given name.</returns>
+            <exception cref="T:Sdl.Web.Common.DxaException">If no Region exists with the given name.</exception>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModelSet.TryGetValue(System.String,Sdl.Web.Common.Models.RegionModel@)">
+            <summary>
+            Tries to get a Region by its name.
+            </summary>
+            <param name="name">The name of the Region.</param>
+            <param name="region">The Region or <c>null</c> if no Region exists with the given name.</param>
+            <returns><c>true</c> if a Region exists with the given name.</returns>
+            <remarks>This method has the same signature as <c>IDictionary&lt;string, RegionModel&gt;</c> for compatibility purposes.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.RegionModelSet.ContainsKey(System.String)">
+            <summary>
+            Determines whether a Region with a given name exists.
+            </summary>
+            <param name="name">The name of the Region.</param>
+            <returns><c>true</c> if a Region with the given name exists.</returns>
+            <remarks>This method has the same signature as <c>IDictionary&lt;string, RegionModel&gt;</c> for compatibility purposes.</remarks>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.StaticContentItem">
+            <summary>
+            Represents a Static Content Item (binary).
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.StaticContentItem.LastModified">
+            <summary>
+            Gets the date/time at which the item was last modified.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.StaticContentItem.TextEncoding">
+            <summary>
+            Gets the Encoding of the text content.
+            </summary>
+            <remarks>
+            This property is only relevant if the content represents text and will be <c>null</c> otherwise.
+            </remarks>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.StaticContentItem.ContentType">
+            <summary>
+            Gets the Content Type (MIME type).
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.StaticContentItem.GetContentStream">
+            <summary>
+            Gets direct access to the underlying (binary) content stream.
+            </summary>
+            <returns>The Content Stream.</returns>
+            <remarks>The client should <see cref="M:System.IDisposable.Dispose">Dispose</see> either this content Stream or (preferably) the entire StaticContentItem.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.StaticContentItem.GetText">
+            <summary>
+            Gets the content as text.
+            </summary>
+            <returns>The content as text.</returns>
+            <remarks>This method automatically disposes the underlying content Stream and can hence only be invoked once.</remarks>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.StaticContentItem.#ctor(System.IO.Stream,System.String,System.DateTime,System.Text.Encoding)">
+            <summary>
+            Initializes a new instance of <see cref="T:Sdl.Web.Common.Models.StaticContentItem"/>.
+            </summary>
+            <param name="contentStream">The (binary) content Stream.</param>
+            <param name="contentType">The content type (MIME type).</param>
+            <param name="lastModified">The date/time the content was last modified.</param>
+            <param name="textEncoding">In case the Content Stream contains text: the encoding of the Content Stream. If not specified or <c>null</c>, method <see cref="M:Sdl.Web.Common.Models.StaticContentItem.GetText"/> will throw an exception.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.StaticContentItem.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.ViewModel">
+            <summary>
+            Abstract base class for all (strongly typed) View Models
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Models.ViewModel.CoreVocabulary">
+            <summary>
+            The internal/built-in Vocabulary ID used for semantic/CM mapping.
+            </summary>
+        </member>
+        <member name="F:Sdl.Web.Common.Models.ViewModel.SchemaOrgVocabulary">
+            <summary>
+            The Vocabulary ID for types defined by schema.org.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.ViewModel.MvcData">
+            <summary>
+            Gets or sets MVC data used to determine which View to use.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.ViewModel.HtmlClasses">
+            <summary>
+            Gets or sets HTML CSS classes for use in View top level HTML element.
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.ViewModel.XpmMetadata">
+            <summary>
+            Gets or sets metadata used to render XPM markup
+            </summary>
+        </member>
+        <member name="P:Sdl.Web.Common.Models.ViewModel.ExtensionData">
+            <summary>
+            Gets or sets extension data (additional properties which can be used by custom Model Builders, Controllers and/or Views)
+            </summary>
+            <value>
+            The value is <c>null</c> if no extension data has been set.
+            </value>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.SetExtensionData(System.String,System.Object)">
+            <summary>
+             Sets an extension data key/value pair.
+            </summary>
+            <remarks>
+            This convenience method ensures the <see cref="P:Sdl.Web.Common.Models.ViewModel.ExtensionData"/> dictionary is initialized before setting the key/value pair.
+            </remarks>
+            <param name="key">The key for the extension data.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.GetXpmMarkup(Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Gets the rendered XPM markup
+            </summary>
+            <param name="localization">The context Localization.</param>
+            <returns>The XPM markup.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.ConcatenateSyndicationFeedItems(System.Collections.Generic.IEnumerable{Sdl.Web.Common.Models.ISyndicationFeedItemProvider},Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Concatenates all syndication feed items provided by a given set of feed item providers.
+            </summary>
+            <param name="feedItemProviders">The set of feed item providers.</param>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The concatenated syndication feed items.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.CreateSyndicationLink(Sdl.Web.Common.Models.Link,Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Creates a syndication item link from a given <see cref="T:Sdl.Web.Common.Models.Link"/> instance.
+            </summary>
+            <param name="link">The <see cref="T:Sdl.Web.Common.Models.Link"/> instance.</param>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The syndication item link or <c>null</c> if <paramref name="link"/> is <c>null</c> or an empty link.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.CreateSyndicationItem(System.String,System.Object,Sdl.Web.Common.Models.Link,System.Nullable{System.DateTime},Sdl.Web.Common.Configuration.Localization)">
+            <summary>
+            Creates a syndication feed item based on essential data.
+            </summary>
+            <param name="title">The title.</param>
+            <param name="summary">The summary. Can be a string or a <see cref="T:Sdl.Web.Common.Models.RichText"/> instance.</param>
+            <param name="link">The link.</param>
+            <param name="publishDate">The date/time this item was published/created. If <c>null</c>, publish date is not included in the feed.</param>
+            <param name="localization">The context <see cref="T:Sdl.Web.Common.Configuration.Localization"/>.</param>
+            <returns>The syndication feed item.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ViewModel.DeepCopy">
+            <summary>
+            Creates a deep copy of this View Model.
+            </summary>
+            <returns>The copied View Model.</returns>
+        </member>
+        <member name="T:Sdl.Web.Common.Models.ModelTypeRegistry">
+            <summary>
+            Represents a Registry of View Model Types and associated Semantics.
+            </summary>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.RegisterViewModel(Sdl.Web.Common.Models.MvcData,System.Type)">
+            <summary>
+            Registers a View Model and associated View.
+            </summary>
+            <param name="viewData">The data for the View to register or <c>null</c> if only the Model Type is to be registered.</param>
+            <param name="modelType">The model Type used by the View.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.RegisterViewModel(Sdl.Web.Common.Models.MvcData,System.String)">
+            <summary>
+            Registers a View Model mapping by compiling a given view file and obtaining its model type.
+            </summary>
+            <param name="viewData">The data for the View to register.</param>
+            <param name="viewVirtualPath">The (virtual) path to the View file.</param>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.GetViewModelType(Sdl.Web.Common.Models.MvcData)">
+            <summary>
+            Get the View Model Type for a given View.
+            </summary>
+            <param name="viewData">The data for the View.</param>
+            <returns>The View Model Type.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.GetSemanticTypes(System.Type,System.Collections.Generic.IDictionary{System.String,System.String}@)">
+            <summary>
+            Gets the semantic types (and prefix mappings) for a given Model Type.
+            </summary>
+            <param name="modelType">The Model Type.</param>
+            <param name="prefixMappings">The prefix mappings for the prefixes used by the types.</param>
+            <returns>The semantic types.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.GetSemanticPropertyNames(System.Type,System.String)">
+            <summary>
+            Gets the semantic property names for a given Model Type and property name.
+            </summary>
+            <param name="modelType">The Model Type.</param>
+            <param name="propertyName">The property name.</param>
+            <returns>The semantic property names or <c>null</c> if no semantic property names have been registered for the given property.</returns>
+        </member>
+        <member name="M:Sdl.Web.Common.Models.ModelTypeRegistry.GetMappedModelTypes(System.String)">
+            <summary>
+            Gets the Model Types mapped to a given semantic type name.
+            </summary>
+            <param name="semanticTypeName">The semantic type name qualified with vocabulary ID.</param>
+            <returns>The mapped model types or <c>null</c> if no Model types are registered for the given semantic type name.</returns>
+        </member>
+    </members>
+</doc>
